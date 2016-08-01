@@ -14,7 +14,7 @@
 //  limitations under the License.
 
 (function (window) {
-    var name = 'TapAdEventForwarder';
+    var name = 'DeviceMatchEventForwarder';
 
     var constructor = function () {
         var self = this,
@@ -47,10 +47,6 @@
                         body = document.getElementsByTagName('body')[0],
                         noscript = document.createElement('noscript'),
                         img = document.createElement('img');
-
-                    // TODO; Verify correct pixel creation
-                    // Pixel script taken from: https://www.facebook.com/business/help/952192354843755
-                    // <noscript><img height="1" width="1" style="display:none" src="' + url + '"/></noscript>
 
                     img.src = url;
                     img.style.display = 'none';

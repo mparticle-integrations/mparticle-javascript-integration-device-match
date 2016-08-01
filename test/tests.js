@@ -1,4 +1,4 @@
-describe('TapAd Forwarder', function () {
+describe('Device Match Forwarder', function () {
     var ReportingService = function () {
         var self = this;
 
@@ -24,7 +24,7 @@ describe('TapAd Forwarder', function () {
         }, reportService.cb, false);
     });
 
-    describe('Init the TapAd forwarder', function () {
+    describe('Init the Device Match forwarder', function () {
         it('should init', function (done) {
             var noscript = document.getElementsByTagName('noscript')[0];
             noscript.should.not.be.undefined();
