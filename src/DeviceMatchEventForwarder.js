@@ -14,7 +14,8 @@
 //  limitations under the License.
 
 (function (window) {
-    var name = 'DeviceMatchEventForwarder';
+    var name = 'DeviceMatchEventForwarder',
+        moduleId = 109;
 
     var constructor = function () {
         var self = this,
@@ -70,6 +71,18 @@
         this.init = initForwarder;
     };
 
+    function getId() {
+        return moduleId;
+    }
+
+    function register(config) {
+        if (config.kits) {
+            config.kits[name] = {
+                constructor: constructor
+            };
+        }
+    }
+
     if (!window ||
         !window.mParticle ||
         !window.mParticle.addForwarder) {
@@ -79,7 +92,12 @@
 
     window.mParticle.addForwarder({
         name: name,
-        constructor: constructor
+        constructor: constructor,
+        getId: getId
     });
+
+    module.exports = {
+        register: register
+    };
 
 })(window);
