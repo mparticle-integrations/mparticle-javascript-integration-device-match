@@ -1,120 +1,130 @@
-(function (global, factory) {
-	typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports) :
-	typeof define === 'function' && define.amd ? define(['exports'], factory) :
-	(global = global || self, factory(global['mp-deviceMatch-kit'] = {}));
-}(this, function (exports) {
-	function createCommonjsModule(fn, module) {
-		return module = { exports: {} }, fn(module, module.exports), module.exports;
-	}
+var mpDeviceMatchKit = (function (exports) {
+  /*!
+   * isobject <https://github.com/jonschlinkert/isobject>
+   *
+   * Copyright (c) 2014-2017, Jon Schlinkert.
+   * Released under the MIT License.
+   */
 
-	var DeviceMatchEventForwarder = createCommonjsModule(function (module) {
-	//
-	//  Copyright 2016 mParticle, Inc.
-	//
-	//  Licensed under the Apache License, Version 2.0 (the "License");
-	//  you may not use this file except in compliance with the License.
-	//  You may obtain a copy of the License at
-	//
-	//      http://www.apache.org/licenses/LICENSE-2.0
-	//
-	//  Unless required by applicable law or agreed to in writing, software
-	//  distributed under the License is distributed on an "AS IS" BASIS,
-	//  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-	//  See the License for the specific language governing permissions and
-	//  limitations under the License.
+  function isObject(val) {
+    return val != null && typeof val === 'object' && Array.isArray(val) === false;
+  }
 
-	(function (window) {
-	    var name = 'DeviceMatchEventForwarder',
-	        moduleId = 109;
+  //
+  //  Copyright 2016 mParticle, Inc.
+  //
+  //  Licensed under the Apache License, Version 2.0 (the "License");
+  //  you may not use this file except in compliance with the License.
+  //  You may obtain a copy of the License at
+  //
+  //      http://www.apache.org/licenses/LICENSE-2.0
+  //
+  //  Unless required by applicable law or agreed to in writing, software
+  //  distributed under the License is distributed on an "AS IS" BASIS,
+  //  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  //  See the License for the specific language governing permissions and
+  //  limitations under the License.
+      
 
-	    var constructor = function () {
-	        var self = this,
-	            isInitialized = false,
-	            forwarderSettings = null;
+      var name = 'DeviceMatchEventForwarder',
+          moduleId = 109;
 
-	        self.name = name;
+      var constructor = function () {
+          var self = this,
+              isInitialized = false,
+              forwarderSettings = null;
 
-	        function initForwarder(settings,
-	            service,
-	            testMode,
-	            sendForwardingStats,
-	            temp,
-	            temp1,
-	            userAttributes,
-	            userIdentities,
-	            appVersion,
-	            appName,
-	            customFlags,
-	            clientId) {
+          self.name = name;
 
-	            forwarderSettings = settings;
+          function initForwarder(settings,
+              service,
+              testMode,
+              sendForwardingStats,
+              temp,
+              temp1,
+              userAttributes,
+              userIdentities,
+              appVersion,
+              appName,
+              customFlags,
+              clientId) {
 
-	            try {
-	                if(!testMode) {
-	                    var partnerId = forwarderSettings.partnerId,
-	                        url = 'https://tapestry.tapad.com/tapestry/1?ta_partner_id=' + partnerId + ' &ta_partner_did=' + clientId + '&ta_format=png;',
-	                        body = document.getElementsByTagName('body')[0],
-	                        noscript = document.createElement('noscript'),
-	                        img = document.createElement('img');
+              forwarderSettings = settings;
 
-	                    img.src = url;
-	                    img.style.display = 'none';
-	                    img.setAttribute('height', '1');
-	                    img.setAttribute('width', '1');
+              try {
+                  if(!testMode) {
+                      var partnerId = forwarderSettings.partnerId,
+                          url = 'https://tapestry.tapad.com/tapestry/1?ta_partner_id=' + partnerId + ' &ta_partner_did=' + clientId + '&ta_format=png;',
+                          body = document.getElementsByTagName('body')[0],
+                          noscript = document.createElement('noscript'),
+                          img = document.createElement('img');
 
-	                    noscript.appendChild(img);
+                      img.src = url;
+                      img.style.display = 'none';
+                      img.setAttribute('height', '1');
+                      img.setAttribute('width', '1');
 
-	                    body.appendChild(noscript);
-	                }
+                      noscript.appendChild(img);
 
-	                isInitialized = true;
-	                return 'Successfully initialized: ' + self.name;
+                      body.appendChild(noscript);
+                  }
 
-	            }
-	            catch (e) {
-	                return 'Can\'t initialize forwarder: ' + self.name + ': ' + e;
-	            }
-	        }
+                  isInitialized = true;
+                  return 'Successfully initialized: ' + self.name;
 
-	        this.init = initForwarder;
-	    };
+              }
+              catch (e) {
+                  return 'Can\'t initialize forwarder: ' + self.name + ': ' + e;
+              }
+          }
 
-	    function getId() {
-	        return moduleId;
-	    }
+          this.init = initForwarder;
+      };
 
-	    function register(config) {
-	        if (config.kits) {
-	            config.kits[name] = {
-	                constructor: constructor
-	            };
-	        }
-	    }
+      function getId() {
+          return moduleId;
+      }
 
-	    if (!window ||
-	        !window.mParticle ||
-	        !window.mParticle.addForwarder) {
+      function register(config) {
+          if (!config) {
+              window.console.log('You must pass a config object to register the kit ' + name);
+              return;
+          }
 
-	            return;
-	        }
+          if (!isObject(config)) {
+              window.console.log('\'config\' must be an object. You passed in a ' + typeof config);
+              return;
+          }
 
-	    window.mParticle.addForwarder({
-	        name: name,
-	        constructor: constructor,
-	        getId: getId
-	    });
+          if (isObject(config.kits)) {
+              config.kits[name] = {
+                  constructor: constructor
+              };
+          } else {
+              config.kits = {};
+              config.kits[name] = {
+                  constructor: constructor
+              };
+          }
+          window.console.log('Successfully registered ' + name + ' to your mParticle configuration');
+      }
 
-	    module.exports = {
-	        register: register
-	    };
+      if (window && window.mParticle && window.mParticle.addForwarder) {
+          window.mParticle.addForwarder({
+              name: name,
+              constructor: constructor,
+              getId: getId
+          });
+      }
 
-	})(window);
-	});
-	var DeviceMatchEventForwarder_1 = DeviceMatchEventForwarder.register;
+      var DeviceMatchEventForwarder = {
+          register: register
+      };
+  var DeviceMatchEventForwarder_1 = DeviceMatchEventForwarder.register;
 
-	exports.default = DeviceMatchEventForwarder;
-	exports.register = DeviceMatchEventForwarder_1;
+  exports.default = DeviceMatchEventForwarder;
+  exports.register = DeviceMatchEventForwarder_1;
 
-	Object.defineProperty(exports, '__esModule', { value: true });
+  return exports;
 
-}));
+}({}));
