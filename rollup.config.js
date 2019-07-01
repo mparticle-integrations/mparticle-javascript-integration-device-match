@@ -21,7 +21,7 @@ export default [
     {
         input: 'src/DeviceMatchEventForwarder.js',
         output: {
-            file: 'dist/DeviceMatchEventForwarder.js',
+            file: 'dist/DeviceMatchEventForwarder.iife.js',
             format: 'iife',
             exports: 'named',
             name: 'mpDeviceMatchKit',
@@ -37,7 +37,7 @@ export default [
     {
         input: 'src/DeviceMatchEventForwarder.js',
         output: {
-            file: 'npm/DeviceMatchEventForwarder.js',
+            file: 'dist/DeviceMatchEventForwarder.common.js',
             format: 'cjs',
             exports: 'named',
             name: 'mpDeviceMatchKit',
