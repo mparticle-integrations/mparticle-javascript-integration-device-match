@@ -5,7 +5,7 @@
   "description": "mParticle integration sdk for Device Match",
   "browser": "dist/DeviceMatchEventForwarder.common.js",
   "files": [
-    "dist/DeviceMatchEventForwarde.commonr.js"
+    "dist/DeviceMatchEventForwarder.common.js"
   ],
   "repository": "https://github.com/mparticle-integrations/mparticle-javascript-integration-device-match",
   "scripts": {
