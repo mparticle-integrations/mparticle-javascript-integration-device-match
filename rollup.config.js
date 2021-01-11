@@ -5,22 +5,6 @@ export default [
     {
         input: 'src/DeviceMatchEventForwarder.js',
         output: {
-            file: 'DeviceMatchEventForwarder.js',
-            format: 'iife',
-            exports: 'named',
-            name: 'mpDeviceMatchKit',
-            strict: false
-        },
-        plugins: [
-            resolve({
-                browser: true
-            }),
-            commonjs()
-        ]
-    },
-    {
-        input: 'src/DeviceMatchEventForwarder.js',
-        output: {
             file: 'dist/DeviceMatchEventForwarder.iife.js',
             format: 'iife',
             exports: 'named',
